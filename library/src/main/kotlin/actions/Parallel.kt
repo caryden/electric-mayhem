@@ -4,7 +4,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 
-class Parallel(vararg val actions : actions.Action) : Action() {
+class Parallel(vararg val actions : Action) : Action() {
     override suspend fun execute() {
         coroutineScope {
             actions
