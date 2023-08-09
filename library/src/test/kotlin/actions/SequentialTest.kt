@@ -18,7 +18,7 @@ class SequentialTest : DescribeSpec({
         var two = false
         var three = false
 
-        var sequentialAction = Sequential(
+        val sequentialAction = Sequential(
             Generic {
                 delay(100)
                 one = true

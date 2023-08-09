@@ -7,7 +7,7 @@ import statemachines.Transition
 class FromBuilder<T : Enum<T>>(val fromState : T, val complete : (Transition<T>) -> Unit) {
     var condition : Flow<Boolean>? = null
     var toState : T? = null
-    var action : actions.Action? = null
+    var action : Action? = null
 
     fun build() : Transition<T> {
         return Transition<T>(fromState, toState!!, condition!!, action!!)

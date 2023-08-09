@@ -8,7 +8,7 @@ class TransitionBuilder<T : Enum<T>>() {
     private var flow : Flow<Boolean>? = null
     private var fromState : T? = null
     private var toState : T? = null
-    private var doAction : actions.Action? = null
+    private var doAction : Action? = null
 
     fun on(onFlow: Flow<Boolean>) {
         flow = onFlow
@@ -19,7 +19,7 @@ class TransitionBuilder<T : Enum<T>>() {
     fun to(state: T) {
         toState =state
     }
-    fun action(action : actions.Action) {
+    fun action(action : Action) {
         doAction = action
     }
     fun build() : Transition<T> {

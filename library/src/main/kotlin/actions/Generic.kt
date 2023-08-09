@@ -1,6 +1,6 @@
 package actions
 
-class Generic(val toExecute : suspend () -> Unit) : actions.Action() {
+class Generic(val toExecute : suspend () -> Unit) : Action() {
     override suspend fun execute() {
         toExecute()
     }

@@ -3,7 +3,6 @@ package subsystems
 import actions.SubsystemAction
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.core.test.testCoroutineScheduler
-import io.kotest.matchers.equality.shouldNotBeEqualToComparingFieldsExcept
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -13,10 +12,8 @@ import kotlinx.coroutines.test.StandardTestDispatcher
 @OptIn(ExperimentalStdlibApi::class, ExperimentalCoroutinesApi::class)
 class SubsystemTest : DescribeSpec({
     coroutineTestScope = true
-
-
     class testSubsystem(dispatcher: CoroutineDispatcher) :Subsystem(dispatcher) {
-        public inner class TestSubSystemAction(val toExecute : suspend () -> Unit) : SubsystemAction(this){
+        inner class TestSubSystemAction(val toExecute : suspend () -> Unit) : SubsystemAction(this){
             override suspend fun subsystemExecute() {
                 toExecute()
             }

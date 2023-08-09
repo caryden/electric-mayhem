@@ -5,15 +5,15 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.common.ExperimentalKotest
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.core.test.testCoroutineScheduler
-import io.kotest.matchers.*
+import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
 import sensors.goesActive
 import sensors.goesInactive
-import sensors.window
 import java.util.concurrent.atomic.AtomicBoolean
 
 @OptIn(ExperimentalCoroutinesApi::class, ExperimentalKotest::class, ExperimentalStdlibApi::class)
@@ -42,7 +42,7 @@ class FiniteStateMachineTest : DescribeSpec({
         }
         it("A StateFlow should cause a trigger") {
             val sensorFlow = MutableStateFlow<Boolean>(false)
-            var collected = AtomicBoolean(false)
+            val collected = AtomicBoolean(false)
             val job = launch {
                 sensorFlow
                     .onEach { println("oneach $it") }

@@ -1,9 +1,5 @@
 package sensors
 
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
-import kotlin.random.Random
-
 class GamePad {
     var isXKeyPressed : Boolean = false
     val x = GamePadButton( { isXKeyPressed }).flow

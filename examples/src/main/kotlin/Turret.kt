@@ -44,7 +44,7 @@ class Turret : Subsystem() {
     // these inner classes are the subsystem actions (commands), they have access to private vars of the Turret (outer) class
     // they are SubsystemAction<Turret> types so that these are the only ones that can mutate this subsystem.  As such,
     // these "require" this subsystem.
-    public inner class MoveToAngle(private val desiredAngle: Double,) : SubsystemAction(this){
+    inner class MoveToAngle(private val desiredAngle: Double,) : SubsystemAction(this){
         override suspend fun subsystemExecute() {
             targetAngle = desiredAngle
         }

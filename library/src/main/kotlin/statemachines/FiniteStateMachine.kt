@@ -5,11 +5,10 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
 import statemachines.builders.TransitionListBuilder
-import sun.rmi.runtime.Log
 import java.io.Closeable
 import java.util.concurrent.atomic.AtomicReference
 
-class FiniteStateMachine<E : Enum<E>>(val initialState: E, val initialAction : actions.Action = actions.Action.NoAction, dispatcher: CoroutineDispatcher = Dispatchers.Default) : Closeable {
+class FiniteStateMachine<E : Enum<E>>(initialState: E, val initialAction : Action = Action.NoAction, dispatcher: CoroutineDispatcher = Dispatchers.Default) : Closeable {
     private val finiteStateMachineScope  : CoroutineScope = CoroutineScope(dispatcher + SupervisorJob())
     private val stateTransitionMap = HashMap<E, MutableList<Transition<E>>>()
     private val transitionFlow = MutableSharedFlow<Transition<E>>(0,10, BufferOverflow.DROP_OLDEST)

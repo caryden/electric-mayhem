@@ -2,11 +2,8 @@ package sensors
 
 import io.kotest.common.ExperimentalKotest
 import io.kotest.core.spec.style.DescribeSpec
-import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.toList
 
 @OptIn(ExperimentalKotest::class)

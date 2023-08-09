@@ -18,7 +18,7 @@ class ParallelRaceTest : DescribeSpec({
         var two = false
         var three = false
 
-        var parallelRaceAction = ParallelRace(
+        val parallelRaceAction = ParallelRace(
             Generic {
                 delay(100)
                 one = true
