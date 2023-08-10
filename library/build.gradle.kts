@@ -1,10 +1,8 @@
 plugins {
     kotlin("jvm") version "1.9.0"
     `java-library`
+    id("maven-publish")
 }
-
-group = "edu.ncssm"
-version = "0.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -21,4 +19,17 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("mavenJava") {
+            from(components["java"])
+
+            // Define artifactId, groupId, and version if they aren't set globally
+            groupId = "com.github.caryden"
+            artifactId = "electric-mayhem"
+            version = "1.0"
+        }
+    }
 }
