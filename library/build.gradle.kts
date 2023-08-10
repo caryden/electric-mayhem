@@ -29,7 +29,7 @@ publishing {
             // Define artifactId, groupId, and version if they aren't set globally
             groupId = "com.github.caryden"
             artifactId = "electric-mayhem"
-            version = "1.0"
+            version = "0.1"
         }
     }
 }
