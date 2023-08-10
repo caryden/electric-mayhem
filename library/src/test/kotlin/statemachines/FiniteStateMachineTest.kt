@@ -25,11 +25,10 @@ class FiniteStateMachineTest : DescribeSpec({
         it("should start in the initial state and initial action should run") {
             val testDispatcher = StandardTestDispatcher(testCoroutineScheduler)
             var initialActionRan = false
-            val initialAction = object : Action() {
-                override suspend fun execute() {
-                    initialActionRan = true
-                    println("initialActionRan")
-                }
+            val initialAction = object : Action({
+                initialActionRan = true
+                println("initialActionRan")
+            }) {
             }
 
             val fsm = FiniteStateMachine(TestStates.STATE1, initialAction, testDispatcher)
@@ -66,11 +65,10 @@ class FiniteStateMachineTest : DescribeSpec({
             val testDispatcher = StandardTestDispatcher(testCoroutineScheduler)
             val sensor = MutableStateFlow(false)
             var movesToStateActionRan = false
-            val movesToStateAction = object : Action() {
-                override suspend fun execute() {
-                    movesToStateActionRan = !movesToStateActionRan
-                    println("movesToStateActionRan")
-                }
+            val movesToStateAction = object : Action({
+                movesToStateActionRan = !movesToStateActionRan
+                println("movesToStateActionRan")
+            }) {
             }
             val fsm = FiniteStateMachine(TestStates.STATE1, Action.NoAction, testDispatcher)
             fsm.transitions {

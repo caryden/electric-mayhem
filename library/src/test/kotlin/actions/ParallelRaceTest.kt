@@ -12,22 +12,22 @@ import kotlinx.coroutines.launch
 class ParallelRaceTest : DescribeSpec({
     coroutineTestScope = true
 
-    describe("Parallel Race COndition Actions")
+    describe("Parallel Race Condition Actions")
     it("should complete when the first child action complete and the other should be cancelled") {
         var one = false
         var two = false
         var three = false
 
         val parallelRaceAction = ParallelRace(
-            Generic {
+            Action {
                 delay(100)
                 one = true
             },
-            Generic {
+            Action {
                 delay(200)
                 two = true
             },
-            Generic {
+            Action {
                 delay(300)
                 three = true
             }

@@ -4,8 +4,8 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.selects.select
 
-class ParallelRace(vararg val actions: Action) : Action() {
-    override suspend fun execute() = coroutineScope {
+class ParallelRace(vararg val actions: Action) : Action({
+    coroutineScope {
         val jobs = actions.map { async { it.execute() } }
         select<Unit> {
             jobs.forEach { job ->
@@ -15,4 +15,5 @@ class ParallelRace(vararg val actions: Action) : Action() {
             }
         }
     }
+}) {
 }

@@ -1,8 +1,9 @@
 package actions
 
-abstract class Action {
-    abstract suspend fun execute()
-    object NoAction : Action() {
-        override suspend fun execute() = Unit
-    }
+
+ open class Action(private val toExecute : suspend () -> Unit) {
+     open suspend fun execute() {
+         toExecute()
+     }
+    object NoAction : Action( { } )
 }

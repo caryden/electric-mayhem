@@ -13,10 +13,7 @@ import kotlinx.coroutines.test.StandardTestDispatcher
 class SubsystemTest : DescribeSpec({
     coroutineTestScope = true
     class testSubsystem(dispatcher: CoroutineDispatcher) :Subsystem(dispatcher) {
-        inner class TestSubSystemAction(val toExecute : suspend () -> Unit) : SubsystemAction(this){
-            override suspend fun subsystemExecute() {
-                toExecute()
-            }
+        inner class TestSubSystemAction(val toExecute : suspend () -> Unit) : SubsystemAction(this, toExecute){
         }
     }
 

@@ -19,15 +19,15 @@ class SequentialTest : DescribeSpec({
         var three = false
 
         val sequentialAction = Sequential(
-            Generic {
+            Action {
                 delay(100)
                 one = true
             },
-            Generic {
+            Action {
                 delay(100)
                 two = true
             },
-            Generic {
+            Action {
                 delay(100)
                 three = true
             }

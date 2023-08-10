@@ -19,15 +19,15 @@ class ParallelTest : DescribeSpec({
             var three = false
 
             val parallelAction = Parallel(
-                Generic {
+                Action {
                     delay(100)
                     one = true
                 },
-                Generic {
+                Action {
                     delay(200)
                     two = true
                 },
-                Generic {
+                Action {
                     delay(300)
                     three = true
                 }
