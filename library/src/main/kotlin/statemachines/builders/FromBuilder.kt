@@ -2,9 +2,11 @@ package statemachines.builders
 
 import actions.Action
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
+import statemachines.FiniteStateMachineStates
 import statemachines.Transition
 
-class FromBuilder<T : Enum<T>>(val fromState : T, val complete : (Transition<T>) -> Unit) {
+class FromBuilder<T : FiniteStateMachineStates>(val fromState : T, val complete : (Transition<T>) -> Unit) {
     var condition : Flow<Boolean>? = null
     var toState : T? = null
     var action : Action? = null
@@ -33,5 +35,7 @@ class FromBuilder<T : Enum<T>>(val fromState : T, val complete : (Transition<T>)
         }
     }
 }
+
+
 
 

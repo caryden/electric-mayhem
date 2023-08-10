@@ -8,25 +8,34 @@ import statemachines.builders.TransitionListBuilder
 import java.io.Closeable
 import java.util.concurrent.atomic.AtomicReference
 
-class FiniteStateMachine<E : Enum<E>>(initialState: E, val initialAction : Action = Action.NoAction, dispatcher: CoroutineDispatcher = Dispatchers.Default) : Closeable {
+class FiniteStateMachine<S : FiniteStateMachineStates>(initialState: S, dispatcher: CoroutineDispatcher = Dispatchers.Default) : Closeable {
     private val finiteStateMachineScope  : CoroutineScope = CoroutineScope(dispatcher + SupervisorJob())
-    private val stateTransitionMap = HashMap<E, MutableList<Transition<E>>>()
-    private val transitionFlow = MutableSharedFlow<Transition<E>>(0,10, BufferOverflow.DROP_OLDEST)
-    private val atomicCurrentState = AtomicReference<E>(initialState)
+    private val stateTransitionMap = HashMap<S, MutableList<Transition<S>>>()
+    private val transitionFlow = MutableSharedFlow<Transition<S>>(0,10, BufferOverflow.DROP_OLDEST)
+    private val currentStateFlow = MutableStateFlow<S>(initialState)
 
-    var currentState : E
-        get() = atomicCurrentState.get()
-        private set(value) = atomicCurrentState.set(value)
+    val currentState : S
+        get() = currentStateFlow.value
 
     init {
         finiteStateMachineScope.launch {
-            // run the initialAction to get us into the initialState
-            initialAction.execute()
+
+            // execute the enter action from the initial state
+            currentStateFlow.value.actionOnEnter.execute()
 
             // then collect triggered transitions
-            transitionFlow.collect {
-                it.action.execute()
-                atomicCurrentState.set(it.toState)
+            transitionFlow.collect {transition ->
+
+                // execute the exit action from the current state
+                currentStateFlow.value.actionOnExit.execute()
+
+                // execute the transition action
+                transition.action.execute()
+                currentStateFlow.value = transition.toState
+
+                // execute the enter action for the new state
+                currentStateFlow.value.actionOnEnter.execute()
+
             }
         }
     }
@@ -37,16 +46,16 @@ class FiniteStateMachine<E : Enum<E>>(initialState: E, val initialAction : Actio
     override fun close() {
         shutdown()
     }
-    fun transitions(buildTransitions: TransitionListBuilder<E>.() -> Unit) {
-        val transitionListBuilder = TransitionListBuilder<E>()
+    fun transitions(buildTransitions: TransitionListBuilder<S>.() -> Unit) {
+        val transitionListBuilder = TransitionListBuilder<S>()
         transitionListBuilder.apply(buildTransitions)
         addTransitions(transitionListBuilder.list)
     }
-    private fun addTransitions(toAdd : List<Transition<E>>) {
+    private fun addTransitions(toAdd : List<Transition<S>>) {
         for (t in toAdd)
             addTransition(t)
     }
-    private fun addTransition(transition: Transition<E>) {
+    private fun addTransition(transition: Transition<S>) {
         val transitions = stateTransitionMap.computeIfAbsent(transition.fromState) { mutableListOf() }
 
         if (transitions.any { it.toState == transition.toState })
@@ -68,6 +77,8 @@ class FiniteStateMachine<E : Enum<E>>(initialState: E, val initialAction : Actio
         }
     }
 }
-fun <E : Enum<E>>fsm(initialState : E, builder: FiniteStateMachine<E>.() -> Unit) : FiniteStateMachine<E> {
-    return FiniteStateMachine<E>(initialState).apply(builder)
+fun <E : FiniteStateMachineStates>fsm(initialState : E,
+                                      dispatcher: CoroutineDispatcher = Dispatchers.Default,
+                                      builder: FiniteStateMachine<E>.() -> Unit) : FiniteStateMachine<E> {
+    return FiniteStateMachine<E>(initialState, dispatcher).apply(builder)
 }
