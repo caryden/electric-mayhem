@@ -10,8 +10,6 @@ repositories {
 
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2") // Use the latest version here
-//    testImplementation(kotlin("test"))
-
     testImplementation("io.kotest:kotest-runner-junit5:5.6.2") // replace 5.x.x with the latest version
     testImplementation("io.kotest:kotest-assertions-core:5.6.2")
     testImplementation("io.kotest:kotest-property:5.6.2")
@@ -26,10 +24,9 @@ publishing {
         create<MavenPublication>("mavenJava") {
             from(components["java"])
 
-            // Define artifactId, groupId, and version if they aren't set globally
-            groupId = "com.github.caryden"
+            groupId = "edu.ncssm"
             artifactId = "electric-mayhem"
-            version = "0.1"
+            version = "0.2"
         }
     }
 }
