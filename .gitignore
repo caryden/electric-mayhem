@@ -41,3 +41,10 @@ bin/
 ### Mac OS ###
 .DS_Store
 local.properties
+/.idea/.name
+/.idea/androidTestResultsUserPreferences.xml
+/.idea/gradle.xml
+/.idea/kotlinc.xml
+/.idea/misc.xml
+/.idea/vcs.xml
+/.idea/workspace.xml
