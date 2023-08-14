@@ -47,6 +47,7 @@ class FiniteStateMachineTest : DescribeSpec({
             val testDispatcher = StandardTestDispatcher(testCoroutineScheduler)
             val fsm = fsm<TestStates>(TestStates.TestState1, testDispatcher) {}
 
+            fsm.start()
             testCoroutineScheduler.advanceUntilIdle()
             fsm.currentState shouldBe TestStates.TestState1
             testState1OnEnterActionRan shouldBe 1
@@ -98,6 +99,8 @@ class FiniteStateMachineTest : DescribeSpec({
                 }
 
             }
+
+            fsm.start()
 
             sensor.value = false
             testCoroutineScheduler.advanceTimeBy(1000)

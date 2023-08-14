@@ -1,4 +1,4 @@
-package edu.ncssm.ftc.electricmayhem
+package edu.ncssm.ftc.electricmayhem.samples.subsystems
 
 import actions.Action
 import statemachines.FiniteStateMachineStates

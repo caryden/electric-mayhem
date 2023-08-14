@@ -1,3 +1,3 @@
 package sensors
 
-data class JoystickValues(val x : Double, val y : Double)
+data class JoystickValues(val x : Float, val y : Float)

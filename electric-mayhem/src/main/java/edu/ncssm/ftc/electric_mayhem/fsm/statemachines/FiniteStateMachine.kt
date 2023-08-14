@@ -1,14 +1,14 @@
 package statemachines
 
 import actions.Action
+import edu.ncssm.ftc.electric_mayhem.fsm.statemachines.StateMachine
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
 import statemachines.builders.TransitionListBuilder
-import java.io.Closeable
-import java.util.concurrent.atomic.AtomicReference
 
-class FiniteStateMachine<S : FiniteStateMachineStates>(initialState: S, dispatcher: CoroutineDispatcher = Dispatchers.Default) : Closeable {
+
+class FiniteStateMachine<S : FiniteStateMachineStates>(initialState: S, dispatcher: CoroutineDispatcher = Dispatchers.Default) : StateMachine {
     private val finiteStateMachineScope  : CoroutineScope = CoroutineScope(dispatcher + SupervisorJob())
     private val stateTransitionMap = HashMap<S, MutableList<Transition<S>>>()
     private val transitionFlow = MutableSharedFlow<Transition<S>>(0,10, BufferOverflow.DROP_OLDEST)
@@ -17,9 +17,8 @@ class FiniteStateMachine<S : FiniteStateMachineStates>(initialState: S, dispatch
     val currentState : S
         get() = currentStateFlow.value
 
-    init {
+    override fun start() {
         finiteStateMachineScope.launch {
-
             // execute the enter action from the initial state
             currentStateFlow.value.actionOnEnter.execute()
 
@@ -35,11 +34,9 @@ class FiniteStateMachine<S : FiniteStateMachineStates>(initialState: S, dispatch
 
                 // execute the enter action for the new state
                 currentStateFlow.value.actionOnEnter.execute()
-
             }
         }
     }
-
     fun shutdown() {
         finiteStateMachineScope.cancel()
     }

@@ -47,6 +47,8 @@ dependencies {
     implementation("com.google.android.material:material:1.9.0")
 
     implementation(project(mapOf("path" to ":electric-mayhem")))
+    compileOnly("org.firstinspires.ftc:RobotCore:8.2.0")
+    compileOnly("org.firstinspires.ftc:Vision:8.2.0")
 
     // these are for the kotest tests
     testImplementation("org.jetbrains.kotlin:kotlin-reflect:1.8.10")

@@ -1,28 +1,41 @@
 package actions
 
+import android.util.Log
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.withTimeout
 
 
 open class Action(private val toExecute : suspend () -> Unit) {
-
-    internal var timeoutMs : Long = 1000L
+    private val tag = this::class.simpleName
+    private val noTimeoutEnabled = 0L
+    internal var timeoutMs : Long = noTimeoutEnabled
+    internal var onTimeout : suspend () -> Unit = { Log.d(tag,"No onTimeout specified.") }
     override fun toString() = this::class.simpleName ?: super.toString()
      open suspend fun execute() {
+         var timedOut = false
          try {
-             withTimeout(timeoutMs){
+             if(timeoutMs > noTimeoutEnabled)
+                 withTimeout(timeoutMs){ toExecute() }
+             else
                  toExecute()
-             }
+
          } catch (ex : TimeoutCancellationException) {
-             // TODO: I need to figure out how to send this to Log.i but that will take me into Log hell i think
-            println("$this timed out with timeout of $timeoutMs")
+             timedOut = true
+             Log.d(tag,"Timed out with timeout of $timeoutMs")
          }
+
+         if(timedOut)
+             onTimeout()
      }
     object NoAction : Action( { } )
 }
 
 fun Action.withTimeout(timeout: Long) : Action {
     this.timeoutMs = timeout
+    return this
+}
+fun Action.onTimeout(action : suspend () -> Unit) : Action {
+    this.onTimeout = action
     return this
 }
 
