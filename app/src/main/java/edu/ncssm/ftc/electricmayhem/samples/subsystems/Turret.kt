@@ -8,6 +8,7 @@ import edu.ncssm.ftc.electric_mayhem.motion.MotionProfileGenerator
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import sensors.window
@@ -46,7 +47,7 @@ class Turret(private val motor : DcMotorEx) : Subsystem() {
                         val (previous, current) = it
                         abs(previous - current) > tolerance
                     }.map { it.last() }
-                    .collect {
+                    .collectLatest {
                         // here we actually send the command to the motor, but only if the power has changed meaningfully
                         motor.power = it
                     }
