@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "edu.ncssm.ftc.electric_mayhem"
+    namespace = "edu.ncssm.ftc.electricmayhem"
     compileSdk = 33
 
     defaultConfig {

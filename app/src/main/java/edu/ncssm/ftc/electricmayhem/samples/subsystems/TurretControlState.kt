@@ -1,6 +1,6 @@
 package edu.ncssm.ftc.electricmayhem.samples.subsystems
 
-import edu.ncssm.ftc.electric_mayhem.core.motion.data.MotionState
+import edu.ncssm.ftc.electricmayhem.core.motion.data.MotionState
 import kotlin.math.abs
 
 
