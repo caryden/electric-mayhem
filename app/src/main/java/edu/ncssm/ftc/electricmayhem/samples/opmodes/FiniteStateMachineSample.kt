@@ -11,16 +11,13 @@ import statemachines.fsm
 
 class FiniteStateMachineSample : LinearOpMode() {
     override fun runOpMode() {
-        val robot = Robot(hardwareMap, gamepad1, gamepad2)
-
-        waitForStart()
-
-        robot.use {
-            robot.start()
-            while (opModeIsActive()) {
-                telemetry.addData("State", robot.currentState)
-                telemetry.update()
-            }
-        }
+       Robot(hardwareMap, gamepad1, gamepad2).use { robot ->
+           waitForStart()
+           robot.start()
+           while (opModeIsActive()) {
+               telemetry.addData("State", robot.currentState)
+               telemetry.update()
+           }
+       }
     }
 }
