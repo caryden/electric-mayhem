@@ -1,5 +1,7 @@
 package subsystems
 
+import edu.ncssm.ftc.electricmayhem.core.sensors.Sensor
+import edu.ncssm.ftc.electricmayhem.core.statemachines.StateMachine
 import kotlinx.coroutines.*
 import java.io.Closeable
 import java.util.concurrent.atomic.AtomicReference
@@ -7,7 +9,8 @@ import java.util.concurrent.atomic.AtomicReference
 abstract class Subsystem(dispatcher: CoroutineDispatcher = Dispatchers.Default) : Closeable {
 
     protected val subsystems = ArrayList<Subsystem>()
-    var stateMachine = edu.ncssm.ftc.electricmayhem.core.statemachines.StateMachine.NoStateMachine
+    protected val sensors = ArrayList<Sensor>()
+    protected var stateMachine = StateMachine.NoStateMachine
     protected val subsystemScope = CoroutineScope(dispatcher + SupervisorJob())
     private var currentSubsystemJob = AtomicReference<Job?>(null)
 
@@ -36,6 +39,9 @@ abstract class Subsystem(dispatcher: CoroutineDispatcher = Dispatchers.Default) 
         stateMachine.close()
 
         for (s in subsystems)
+            s.close()
+
+        for (s in sensors)
             s.close()
     }
 

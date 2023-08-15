@@ -1,5 +1,6 @@
 package sensors
 
+import edu.ncssm.ftc.electricmayhem.core.sensors.Sensor
 import edu.ncssm.ftc.electricmayhem.core.sensors.data.SensorData
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.FlowCollector
@@ -8,7 +9,7 @@ import kotlinx.coroutines.flow.StateFlow
 import java.io.Closeable
 
 open class SensorFlow<T>(private val getValue: () -> T, pollingMs : Long = 100L, dispatcher: CoroutineDispatcher = Dispatchers.IO)
-    : StateFlow<SensorData<T>>, Closeable {
+    : StateFlow<SensorData<T>>, Sensor {
     private val stateflow = MutableStateFlow(SensorData<T>(getValue(), System.nanoTime()))
     private val sensorScope  = CoroutineScope(dispatcher + SupervisorJob())
     init {
