@@ -4,7 +4,7 @@ import actions.SubsystemAction
 import com.qualcomm.robotcore.hardware.DcMotorEx
 import com.qualcomm.robotcore.hardware.HardwareMap
 import com.qualcomm.robotcore.hardware.ServoImplEx
-import edu.ncssm.ftc.electric_mayhem.motion.MotionProfileGenerator
+import edu.ncssm.ftc.electric_mayhem.core.motion.MotionProfileGenerator
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

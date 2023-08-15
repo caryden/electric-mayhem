@@ -1,9 +1,11 @@
 package sensors
 
+import edu.ncssm.ftc.electric_mayhem.core.sensors.data.SensorData
 import io.kotest.common.ExperimentalKotest
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.toList
 
 @OptIn(ExperimentalKotest::class)
@@ -26,6 +28,7 @@ class FlowExtensionsTests : DescribeSpec({
                 val elements = listOf(false, false, true, true, false)
                 val outputList = MutableList<Boolean>(0) { false }
                 elements.asFlow()
+                    .map { SensorData(it) }
                     .goesActive()
                     .toList(outputList)
                 outputList.size shouldBe 1
@@ -34,6 +37,7 @@ class FlowExtensionsTests : DescribeSpec({
                 val elements = listOf(false, false, true, true, false)
                 val outputList = MutableList<Boolean>(0) { false }
                 elements.asFlow()
+                    .map { SensorData(it) }
                     .goesActive()
                     .toList(outputList)
                 outputList.size shouldBe 1

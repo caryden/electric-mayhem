@@ -33,9 +33,8 @@ class GamePadButtonTest : DescribeSpec({
                 simulatedButtonState = false
                 testCoroutineScheduler.advanceTimeBy(2 * pollingMs) // advance time to let the flow emit
                 timesPressed shouldBe 1
-                gamePadButton.shutdown()
                 collectorJob.cancel()
-
+                gamePadButton.close()
             }
         }
 
@@ -58,8 +57,8 @@ class GamePadButtonTest : DescribeSpec({
                 simulatedButtonState = false
                 testCoroutineScheduler.advanceTimeBy(2 * pollingMs) // advance time to let the flow emit
                 timesReleased shouldBe 1
-                gamePadButton.shutdown()
                 collectorJob.cancel()
+                gamePadButton.close()
             }
         }
     }
