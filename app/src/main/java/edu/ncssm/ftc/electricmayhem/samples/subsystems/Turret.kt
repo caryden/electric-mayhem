@@ -3,6 +3,7 @@ package edu.ncssm.ftc.electricmayhem.samples.subsystems
 import actions.SubsystemAction
 import com.qualcomm.robotcore.hardware.DcMotorEx
 import com.qualcomm.robotcore.hardware.HardwareMap
+import edu.ncssm.ftc.electricmayhem.core.actuators.MotorFlow
 import edu.ncssm.ftc.electricmayhem.core.motion.MotionProfileGenerator
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,44 +21,19 @@ class Turret(private val motor : DcMotorEx) : Subsystem() {
 
     val arm = Arm()
     private val controlLoopTimeMs = 10L
-    private var currentControlState = MutableStateFlow(TurretControlState(0.0, 0.0))
-    private var targetControlState = MutableStateFlow(TurretControlState(0.0, 0.0))
-    private var desiredMotorPower = MutableStateFlow(0.0)
+    private val currentControlState = MutableStateFlow(TurretControlState(0.0, 0.0))
+    private val targetControlState = MutableStateFlow(TurretControlState(0.0, 0.0))
+    private val desiredMotorPower = MotorFlow({ motor.power = it }, 0.0, 0.01)
     val current get() = currentControlState.asStateFlow()
     val target get() = targetControlState.asStateFlow()
-
     init {
         subsystems.add(arm)
     }
-
     override fun start() {
         super.start()
         startControlLoop()
-        startMotorCommandLoop()
-    }
-    private fun startMotorCommandLoop() {
-        // we collect the flow of the desired motor power here and set the motors to that power
-        // if needed
-        subsystemScope.launch {
-            try {
-                val tolerance = 0.01 // this is the tolerance for the motor power
-                desiredMotorPower.window(2)
-                    .filter {
-                        val (previous, current) = it
-                        abs(previous - current) > tolerance
-                    }.map { it.last() }
-                    .collectLatest {
-                        // here we actually send the command to the motor, but only if the power has changed meaningfully
-                        motor.power = it
-                    }
-            } finally {
-                // this block will run even if the coroutine is cancelled and return the motor to a safe state
-                motor.power = 0.0
-            }
-        }
     }
     private fun startControlLoop() {
-
         // this launches the control loop coroutine
         subsystemScope.launch {
             try {

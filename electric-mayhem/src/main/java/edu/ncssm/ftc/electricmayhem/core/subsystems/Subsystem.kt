@@ -10,7 +10,7 @@ abstract class Subsystem(dispatcher: CoroutineDispatcher = Dispatchers.Default) 
 
     protected val subsystems = ArrayList<Subsystem>()
     protected val sensors = ArrayList<Sensor>()
-    protected var stateMachine = StateMachine.NoStateMachine
+    open val stateMachine = StateMachine.NoStateMachine
     protected val subsystemScope = CoroutineScope(dispatcher + SupervisorJob())
     private var currentSubsystemJob = AtomicReference<Job?>(null)
 

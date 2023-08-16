@@ -1,4 +1,4 @@
-package edu.ncssm.ftc.electricmayhem.core.sensors
+package edu.ncssm.ftc.electricmayhem.core.sensors.gamepad
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers

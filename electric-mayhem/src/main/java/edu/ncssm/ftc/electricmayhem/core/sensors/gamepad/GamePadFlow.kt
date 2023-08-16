@@ -1,4 +1,4 @@
-package sensors
+package edu.ncssm.ftc.electricmayhem.core.sensors.gamepad
 
 import com.qualcomm.robotcore.hardware.Gamepad
 import edu.ncssm.ftc.electricmayhem.core.sensors.data.JoystickData
@@ -23,8 +23,8 @@ class GamePadFlow(private val gamepad : Gamepad) {
     val rightBumper = GamePadButton( { gamepad.right_bumper })
     val leftBumper = GamePadButton( { gamepad.left_bumper })
 
-    val rightTrigger = edu.ncssm.ftc.electricmayhem.core.sensors.Trigger({ gamepad.right_trigger })
-    val leftTrigger = edu.ncssm.ftc.electricmayhem.core.sensors.Trigger({ gamepad.left_trigger })
+    val rightTrigger = Trigger({ gamepad.right_trigger })
+    val leftTrigger = Trigger({ gamepad.left_trigger })
 
     val rightJoystick = Joystick({ JoystickData(gamepad.right_stick_x, gamepad.right_stick_y) })
     val leftJoystick = Joystick({ JoystickData(gamepad.right_stick_x, gamepad.right_stick_y) })

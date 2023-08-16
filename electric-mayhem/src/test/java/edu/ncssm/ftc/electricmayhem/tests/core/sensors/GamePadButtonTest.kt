@@ -8,7 +8,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
-import sensors.GamePadButton
+import edu.ncssm.ftc.electricmayhem.core.sensors.gamepad.GamePadButton
 import sensors.goesActive
 import sensors.goesInactive
 
@@ -18,7 +18,7 @@ class GamePadButtonTest : DescribeSpec({
     val pollingMs = 100L
     coroutineTestScope = true
 
-    describe("sensors.GamePadButton") {
+    describe("edu.ncssm.ftc.electricmayhem.core.sensors.gamepad.GamePadButton") {
         context("when button is pressed") {
             it("should be registered as pressed") {
                 var timesPressed = 0
