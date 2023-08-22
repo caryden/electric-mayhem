@@ -9,6 +9,6 @@ class TransitionListBuilder<T : FiniteStateMachineStates>() {
 
     fun whenIn(state : T, buildOn : FromBuilder<T>.OnBuilder.() -> Unit) {
         val fromBuilder = FromBuilder<T>(state) { t -> _flatTransitionList.add(t) }
-        val onBuilder = fromBuilder.OnBuilder().apply(buildOn)
+        fromBuilder.OnBuilder().apply(buildOn)
     }
 }
