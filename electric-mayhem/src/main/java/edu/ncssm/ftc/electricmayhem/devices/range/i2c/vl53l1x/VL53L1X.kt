@@ -22,6 +22,10 @@ import edu.ncssm.ftc.electricmayhem.devices.range.i2c.utils.shr
 import java.io.Closeable
 import java.util.concurrent.atomic.AtomicReference
 import kotlin.experimental.and
+import com.qualcomm.hardware.lynx.LynxI2cDeviceSynch
+
+
+
 
 /** Built from guidance derived from:
  * https://github.com/FIRST-Tech-Challenge/ftcrobotcontroller/wiki/Writing-an-I2C-Driver
@@ -230,7 +234,10 @@ class VL53L1X(deviceClient: I2cDeviceSynch?, deviceClientIsOwned: Boolean) :
     private var hasContinuousRangingBeenStarted = false
 
     init {
-        deviceClient!!.i2cAddress = VL53L1X_ADDRESS_DEFAULT
+        val dc = deviceClient!!
+        dc.i2cAddress = VL53L1X_ADDRESS_DEFAULT
+        if (dc is LynxI2cDeviceSynch)
+            (dc as LynxI2cDeviceSynch).setBusSpeed(LynxI2cDeviceSynch.BusSpeed.FAST_400K)
 
         // Once everything has been set up, we need to engage the sensor to start communicating.
         // We also need to run the arming state callback method that deals with situations involving USB cables disconnecting and reconnecting
