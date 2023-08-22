@@ -31,6 +31,8 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    @Suppress("UnstableApiUsage")
     testOptions {
         unitTests.all {
             it.useJUnitPlatform()
@@ -50,8 +52,8 @@ dependencies {
 
     // these are for the kotest tests
     testImplementation("ch.qos.logback:logback-classic:1.4.11")
-    testImplementation("io.mockk:mockk:1.13.5")
-    testImplementation("org.jetbrains.kotlin:kotlin-reflect:1.8.10")
+    testImplementation("io.mockk:mockk:1.13.7")
+    testImplementation("org.jetbrains.kotlin:kotlin-reflect:1.9.0")
     testImplementation("io.kotest:kotest-runner-junit5-jvm:5.6.2")
     testImplementation("io.kotest:kotest-runner-junit5-jvm:5.6.2")
     testImplementation("io.kotest:kotest-assertions-core-jvm:5.6.2")

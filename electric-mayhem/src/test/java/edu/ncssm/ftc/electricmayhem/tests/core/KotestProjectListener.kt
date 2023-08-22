@@ -9,13 +9,13 @@ import io.mockk.mockkStatic
 class MyKotestProjectListener : ProjectListener {
     override suspend fun beforeProject() {
         mockkStatic(Log::class)
-        every { Log.v(any<String>(), any<String>()) } answers { println("VERBOSE: ${args[0]} - ${args[1]}"); 0 }
-        every { Log.d(any<String>(), any<String>()) } answers { println("DEBUG: ${args[0]} - ${args[1]}"); 0 }
-        every { Log.i(any<String>(), any<String>()) } answers { println("INFO: ${args[0]} - ${args[1]}"); 0 }
-        every { Log.e(any<String>(), any<String>()) } answers { println("ERROR: ${args[0]} - ${args[1]}"); 0 }
+        every { Log.v(any(), any()) } answers { println("VERBOSE: ${args[0]} - ${args[1]}"); 0 }
+        every { Log.d(any(), any()) } answers { println("DEBUG: ${args[0]} - ${args[1]}"); 0 }
+        every { Log.i(any(), any()) } answers { println("INFO: ${args[0]} - ${args[1]}"); 0 }
+        every { Log.e(any(), any()) } answers { println("ERROR: ${args[0]} - ${args[1]}"); 0 }
     }
 }
-
+@Suppress("unused")
 object ProjectConfig : AbstractProjectConfig() {
-    override fun listeners() = listOf(MyKotestProjectListener())
+    override fun extensions() = listOf(MyKotestProjectListener())
 }
