@@ -45,18 +45,17 @@ tasks.withType<Test>().configureEach {
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
     compileOnly("org.firstinspires.ftc:RobotCore:8.2.0")
+    compileOnly("org.firstinspires.ftc:Hardware:8.2.0")
     compileOnly("org.firstinspires.ftc:Vision:8.2.0")
 
-//    implementation("androidx.core:core-ktx:1.9.0")
-//    implementation("androidx.appcompat:appcompat:1.6.1")
-//    implementation("com.google.android.material:material:1.8.0")
-//
     // these are for the kotest tests
+    testImplementation("ch.qos.logback:logback-classic:1.4.11")
     testImplementation("io.mockk:mockk:1.13.5")
     testImplementation("org.jetbrains.kotlin:kotlin-reflect:1.8.10")
-    testImplementation("io.kotest:kotest-runner-junit5:5.6.2")
-    testImplementation("io.kotest:kotest-assertions-core:5.6.2")
-    testImplementation("io.kotest:kotest-property:5.6.2")
+    testImplementation("io.kotest:kotest-runner-junit5-jvm:5.6.2")
+    testImplementation("io.kotest:kotest-runner-junit5-jvm:5.6.2")
+    testImplementation("io.kotest:kotest-assertions-core-jvm:5.6.2")
+    testImplementation("io.kotest:kotest-property-jvm:5.6.2")
 }
 
 afterEvaluate {

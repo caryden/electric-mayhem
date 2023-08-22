@@ -1,6 +1,7 @@
 package edu.ncssm.ftc.electricmayhem.samples.subsystems
 
 import actions.Action
+import com.qualcomm.hardware.lynx.LynxModule
 import com.qualcomm.robotcore.hardware.Gamepad
 import com.qualcomm.robotcore.hardware.HardwareMap
 import edu.ncssm.ftc.electricmayhem.core.sensors.gamepad.GamePadFlow
@@ -64,6 +65,7 @@ class Robot(hardwareMap: HardwareMap, gamepad1: Gamepad, gamepad2 : Gamepad) : S
     }
 
     init {
+        hardwareMap.getAll(LynxModule::class.java).forEach { it.bulkCachingMode = LynxModule.BulkCachingMode.AUTO }
         subsystems.add(turret)
         sensors.addAll(listOf(beamBreak, batteryVoltage))
     }
