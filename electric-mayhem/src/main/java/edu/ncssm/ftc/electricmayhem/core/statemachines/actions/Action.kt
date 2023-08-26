@@ -1,17 +1,18 @@
 package actions
 
 import android.util.Log
+import edu.ncssm.ftc.electricmayhem.core.general.Actionable
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.withTimeout
 
 
-open class Action(private val toExecute : suspend () -> Unit) {
+open class Action(private val toExecute : suspend () -> Unit) : Actionable {
     private val tag = this::class.simpleName
     private val noTimeoutEnabled = 0L
     internal var timeoutMs : Long = noTimeoutEnabled
     internal var onTimeout : suspend () -> Unit = { Log.d(tag,"No onTimeout specified.") }
     override fun toString() = this::class.simpleName ?: super.toString()
-     open suspend fun execute() {
+     override suspend fun execute() {
          var timedOut = false
          try {
              if(timeoutMs > noTimeoutEnabled)

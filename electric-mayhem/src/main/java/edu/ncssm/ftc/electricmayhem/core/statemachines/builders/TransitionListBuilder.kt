@@ -1,7 +1,7 @@
 package statemachines.builders
 
-import statemachines.FiniteStateMachineStates
-import statemachines.Transition
+import edu.ncssm.ftc.electricmayhem.core.statemachines.FiniteStateMachineStates
+import edu.ncssm.ftc.electricmayhem.core.statemachines.Transition
 
 class TransitionListBuilder<T : FiniteStateMachineStates>() {
     private val _flatTransitionList = ArrayList<Transition<T>>()

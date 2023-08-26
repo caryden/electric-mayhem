@@ -1,4 +1,4 @@
-package edu.ncssm.ftc.electricmayhem.tests.core.actions
+package edu.ncssm.ftc.electricmayhem.tests.core.statemachines.actions
 
 import actions.Action
 import actions.Parallel

@@ -16,9 +16,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
 import sensors.goesActive
 import sensors.not
-import statemachines.FiniteStateMachine
-import statemachines.FiniteStateMachineStates
-import statemachines.fsm
+import edu.ncssm.ftc.electricmayhem.core.statemachines.FiniteStateMachine
+import edu.ncssm.ftc.electricmayhem.core.statemachines.FiniteStateMachineStates
+import edu.ncssm.ftc.electricmayhem.core.statemachines.fsm
 import java.util.concurrent.atomic.AtomicBoolean
 
 var testState1OnEnterActionRan = 0

@@ -1,7 +1,7 @@
 package edu.ncssm.ftc.electricmayhem.samples.subsystems
 
 import actions.Action
-import statemachines.FiniteStateMachineStates
+import edu.ncssm.ftc.electricmayhem.core.statemachines.FiniteStateMachineStates
 
 sealed class RobotStates(actionOnEnter : Action = Action.NoAction, actionOnExit : Action = Action.NoAction )
     : FiniteStateMachineStates(actionOnEnter, actionOnExit) {

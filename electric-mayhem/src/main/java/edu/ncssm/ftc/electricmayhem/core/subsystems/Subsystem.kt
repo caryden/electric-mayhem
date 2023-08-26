@@ -10,7 +10,6 @@ abstract class Subsystem(dispatcher: CoroutineDispatcher = Dispatchers.Default) 
 
     protected val subsystems = ArrayList<Subsystem>()
     protected val sensors = ArrayList<Sensor>()
-    open val stateMachine = StateMachine.NoStateMachine
     protected val subsystemScope = CoroutineScope(dispatcher + SupervisorJob())
     private var currentSubsystemJob = AtomicReference<Job?>(null)
 
@@ -29,14 +28,10 @@ abstract class Subsystem(dispatcher: CoroutineDispatcher = Dispatchers.Default) 
     open fun start() {
         for (s in subsystems)
             s.start()
-
-        stateMachine.start()
     }
     override fun close() {
         if(subsystemScope.isActive)
             subsystemScope.cancel()
-
-        stateMachine.close()
 
         for (s in subsystems)
             s.close()

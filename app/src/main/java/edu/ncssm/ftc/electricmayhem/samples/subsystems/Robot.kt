@@ -4,21 +4,19 @@ import actions.Action
 import com.qualcomm.hardware.lynx.LynxModule
 import com.qualcomm.robotcore.hardware.Gamepad
 import com.qualcomm.robotcore.hardware.HardwareMap
+import edu.ncssm.ftc.electricmayhem.core.general.RobotBase
 import edu.ncssm.ftc.electricmayhem.core.sensors.gamepad.GamePadFlow
-import kotlinx.coroutines.flow.map
+import edu.ncssm.ftc.electricmayhem.core.statemachines.fsm
 import sensors.SensorFlow
 import sensors.goesActive
-import sensors.window
-import statemachines.fsm
-import subsystems.Subsystem
 
-class Robot(hardwareMap: HardwareMap, gamepad1: Gamepad, gamepad2 : Gamepad) : Subsystem() {
-    val turret = Turret(hardwareMap, "turretMotor")
-    val beamBreak = SensorFlow({ false }, 10L)
-    val batteryVoltage = SensorFlow({ hardwareMap.voltageSensor.first().voltage }, 100L)
-    val driverGamePad = GamePadFlow(gamepad1)
+class Robot(hardwareMap: HardwareMap, gamepad1: Gamepad, gamepad2 : Gamepad) : RobotBase() {
+    private val turret = Turret(hardwareMap, "turretMotor")
+    private val beamBreak = SensorFlow({ false }, 10L)
+    private val batteryVoltage = SensorFlow({ hardwareMap.voltageSensor.first().voltage }, 100L)
+    private val driverGamePad = GamePadFlow(gamepad1)
     val gunnerGamePad = GamePadFlow(gamepad2)
-    override val stateMachine = fsm<RobotStates>(RobotStates.Travel) {
+    override val behaviorController = fsm<RobotStates>(RobotStates.Travel) {
         transitions {
             whenIn(RobotStates.Travel) {
                 whenever(driverGamePad.x.goesActive())
@@ -63,7 +61,6 @@ class Robot(hardwareMap: HardwareMap, gamepad1: Gamepad, gamepad2 : Gamepad) : S
             // etc.
         }
     }
-
     init {
         hardwareMap.getAll(LynxModule::class.java).forEach { it.bulkCachingMode = LynxModule.BulkCachingMode.AUTO }
         subsystems.add(turret)

@@ -1,6 +1,6 @@
 package edu.ncssm.ftc.electricmayhem.tests.core.subsystems
 
-import actions.SubsystemAction
+import edu.ncssm.ftc.electricmayhem.core.subsystems.SubsystemCommand
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.core.test.testCoroutineScheduler
 import io.kotest.matchers.shouldBe
@@ -14,17 +14,17 @@ import subsystems.Subsystem
 class SubsystemTest : DescribeSpec({
     coroutineTestScope = true
     class testSubsystem(dispatcher: CoroutineDispatcher) : Subsystem(dispatcher) {
-        inner class TestSubSystemAction(val toExecute : suspend () -> Unit) : SubsystemAction(this, toExecute){
+        inner class TestSubSystemCommand(val toExecute : suspend () -> Unit) : SubsystemCommand(this, toExecute){
         }
     }
 
 
 
-    describe("Subssytems") {
-        it("a subsystem should be able to execute subsystem actions") {
+    describe("Subsystems") {
+        it("a subsystem should be able to start subsystem actions") {
             var executed = false
             val ss = testSubsystem(StandardTestDispatcher(testCoroutineScheduler))
-            val ssAction = ss.TestSubSystemAction { executed = true }
+            val ssAction = ss.TestSubSystemCommand { executed = true }
             ssAction.execute()
             testCoroutineScheduler.advanceTimeBy(1000)
             executed shouldBe  true
@@ -33,11 +33,11 @@ class SubsystemTest : DescribeSpec({
             var executed1 = false
             var executed2 = false
             val ss = testSubsystem(StandardTestDispatcher(testCoroutineScheduler))
-            val ssAction1 = ss.TestSubSystemAction {
+            val ssAction1 = ss.TestSubSystemCommand {
                 delay(100)
                 executed1 = true
             }
-            val ssAction2 = ss.TestSubSystemAction {
+            val ssAction2 = ss.TestSubSystemCommand {
                 executed2 = true
             }
             ssAction1.execute()

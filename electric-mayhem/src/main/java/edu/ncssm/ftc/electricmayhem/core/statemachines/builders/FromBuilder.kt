@@ -1,15 +1,15 @@
 package statemachines.builders
 
 import actions.Action
+import edu.ncssm.ftc.electricmayhem.core.general.Actionable
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.combine
-import statemachines.FiniteStateMachineStates
-import statemachines.Transition
+import edu.ncssm.ftc.electricmayhem.core.statemachines.FiniteStateMachineStates
+import edu.ncssm.ftc.electricmayhem.core.statemachines.Transition
 
 class FromBuilder<T : FiniteStateMachineStates>(val fromState : T, val complete : (Transition<T>) -> Unit) {
     var condition : Flow<Boolean>? = null
     var toState : T? = null
-    var action : Action? = null
+    var action : Actionable? = null
 
     fun build() : Transition<T> {
         return Transition<T>(fromState, toState!!, condition!!, action!!)
@@ -28,7 +28,7 @@ class FromBuilder<T : FiniteStateMachineStates>(val fromState : T, val complete 
         }
     }
     inner class ActionBuilder {
-        fun andDo(a : actions.Action){
+        fun andDo(a : Actionable) {
             action = a
             val transition = build()
             complete(transition)

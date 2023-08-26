@@ -492,7 +492,6 @@ class VL53L1X(deviceClient: I2cDeviceSynch?, deviceClientIsOwned: Boolean) :
                 writeShort(SD_CONFIG__WOI_SD0, 0x0F0D)
                 writeShort(SD_CONFIG__INITIAL_PHASE_SD0, 0x0E0E)
             }
-            else -> throw IllegalStateException("Unknown distance mode value $distanceMode")
         }
 
         setTimingBudgetInMs(timingBudgetInMs)
@@ -594,7 +593,6 @@ class VL53L1X(deviceClient: I2cDeviceSynch?, deviceClientIsOwned: Boolean) :
                     else -> throw IllegalArgumentException("for DistanceMode = $distanceMode, Timing budget must be one of 20, 33, 50, 100, 200, or 500")
                 }
             }
-            else -> throw IllegalStateException("Unknown distance mode value read from sensor: $distanceMode")
         }
     }
     private fun setInterMeasurementInMs(interMeasurementMs : Int) {
