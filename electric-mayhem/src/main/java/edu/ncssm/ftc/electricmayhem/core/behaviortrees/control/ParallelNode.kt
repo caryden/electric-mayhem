@@ -13,9 +13,8 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class ParallelNode(vararg children : Node, dispatcher: CoroutineDispatcher = Dispatchers.Default)
+class ParallelNode(vararg children : Node)
     : ControlNode {
-    private val parallelScope = CoroutineScope(dispatcher)
     private  val statusFlow = MutableStateFlow<NodeStatus>(NodeStatus.Idle)
     override val status = statusFlow.asStateFlow()
     override val children = children.toList()
@@ -23,14 +22,16 @@ class ParallelNode(vararg children : Node, dispatcher: CoroutineDispatcher = Dis
         tickContext.tickedNodes.add(this)
         statusFlow.value = NodeStatus.Running
         try {
-            val results = children.map { parallelScope.async { it.tick(tickContext) } }.awaitAll()
-            statusFlow.value =
-                if (results.all { it == NodeStatus.Success })
-                    NodeStatus.Success
-                else if (results.any { it == NodeStatus.Cancelled })
-                    NodeStatus.Cancelled
-                else
-                    NodeStatus.Failure
+            coroutineScope {
+                val results = children.map { async { it.tick(tickContext) } }.awaitAll()
+                statusFlow.value =
+                    if (results.all { it == NodeStatus.Success })
+                        NodeStatus.Success
+                    else if (results.any { it == NodeStatus.Cancelled })
+                        NodeStatus.Cancelled
+                    else
+                        NodeStatus.Failure
+            }
 
         } catch (c : CancellationException) {
             statusFlow.value = NodeStatus.Cancelled

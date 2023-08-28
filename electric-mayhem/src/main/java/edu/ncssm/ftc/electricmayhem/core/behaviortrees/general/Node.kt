@@ -4,6 +4,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 
 interface Node  {
-    val status: Flow<NodeStatus>
+    val status: StateFlow<NodeStatus>
     suspend fun tick(tickContext: TickContext) : NodeStatus
 }

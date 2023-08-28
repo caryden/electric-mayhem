@@ -46,12 +46,17 @@ class BehaviorTree(dispatcher: CoroutineDispatcher = Dispatchers.Default, val ro
         treeScope.launch {
             var currentTickJob: Job? = null
             var tickCount : Long = 0
+            // here I create a new coroutine scope for the tickTrigger flow.  This is because I want to be able to cancel
+            // the tick job when a condition changes.  I don't want to cancel the entire treeScope because that would cancel
+            // the tickTrigger flow and we would never tick again.
+            val tickScope = CoroutineScope(treeScope.coroutineContext + Job())
             tickTrigger.collectLatest {
                 if (it.newStatus in setOf(NodeStatus.Success, NodeStatus.Failure)) {
                     // wait for the current tick job (if one exists) to cancel and completely finish to avoid race conditions
                     currentTickJob?.cancelAndJoin()
-                    currentTickJob = treeScope.launch {
-                        val tickContext = TickContext(tickCount++)
+
+                    val tickContext = TickContext(tickCount++)
+                    currentTickJob = tickScope.launch {
                         root.tick(tickContext)
                     }
                 }
