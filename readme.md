@@ -25,6 +25,7 @@ For usage examples, refer to the sample opModes in the `app` module. Additionall
 - For an introduction to Finite State Machines in the context of FTC, refer to [Game Manual Zero](https://gm0.org/en/stable/docs/software/state-machines.html).
 - To learn more about BehaviorTrees, check out this [YouTube playlist](https://youtube.com/playlist?list=PLFQdM4LOGDr_vYJuo8YTRcmv3FrwczdKg&si=z4Xpl5PENQ6W9Unb).
 - For an academic perspective on BehaviorTrees, read this [paper](https://arxiv.org/abs/1709.00084).
+- Here is a [really good overview of kotlin flows](https://youtu.be/emk9_tVVLcc).
 
 ## Contributing
 
