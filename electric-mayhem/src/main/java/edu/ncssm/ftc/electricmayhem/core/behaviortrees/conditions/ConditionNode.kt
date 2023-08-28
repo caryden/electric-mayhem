@@ -1,5 +1,8 @@
-package edu.ncssm.ftc.electricmayhem.core.behaviortrees
+package edu.ncssm.ftc.electricmayhem.core.behaviortrees.conditions
 
+import edu.ncssm.ftc.electricmayhem.core.behaviortrees.general.Node
+import edu.ncssm.ftc.electricmayhem.core.behaviortrees.general.NodeStatus
+import edu.ncssm.ftc.electricmayhem.core.behaviortrees.general.TickContext
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import java.io.Closeable
@@ -20,7 +23,8 @@ class ConditionNode(private val conditionFlow : Flow<Boolean>, initialCondition 
             }
         }
     }
-    override suspend fun tick() : NodeStatus {
+    override suspend fun tick(tickContext: TickContext): NodeStatus {
+        tickContext.tickedNodes.add(this)
         return statusFlow.value
     }
     override fun close() {

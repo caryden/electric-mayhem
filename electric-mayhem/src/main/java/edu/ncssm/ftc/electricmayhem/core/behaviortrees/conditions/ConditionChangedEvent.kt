@@ -1,5 +1,6 @@
-package edu.ncssm.ftc.electricmayhem.core.behaviortrees
+package edu.ncssm.ftc.electricmayhem.core.behaviortrees.conditions
 
+import edu.ncssm.ftc.electricmayhem.core.behaviortrees.general.NodeStatus
 import kotlin.time.ExperimentalTime
 import kotlin.time.TimeSource
 

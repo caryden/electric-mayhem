@@ -1,21 +1,29 @@
-package edu.ncssm.ftc.electricmayhem.core.behaviortrees
+package edu.ncssm.ftc.electricmayhem.core.behaviortrees.control
 
+import edu.ncssm.ftc.electricmayhem.core.behaviortrees.general.Node
+import edu.ncssm.ftc.electricmayhem.core.behaviortrees.general.NodeStatus
+import edu.ncssm.ftc.electricmayhem.core.behaviortrees.general.TickContext
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class ParallelNode(vararg children : Node)
+class ParallelNode(vararg children : Node, dispatcher: CoroutineDispatcher = Dispatchers.Default)
     : ControlNode {
+    private val parallelScope = CoroutineScope(dispatcher)
     private  val statusFlow = MutableStateFlow<NodeStatus>(NodeStatus.Idle)
     override val status = statusFlow.asStateFlow()
     override val children = children.toList()
-    override suspend fun tick() : NodeStatus {
+    override suspend fun tick(tickContext: TickContext): NodeStatus {
+        tickContext.tickedNodes.add(this)
         statusFlow.value = NodeStatus.Running
         try {
-            val results  = coroutineScope { children.map { async { it.tick() } }.awaitAll() }
+            val results = children.map { parallelScope.async { it.tick(tickContext) } }.awaitAll()
             statusFlow.value =
                 if (results.all { it == NodeStatus.Success })
                     NodeStatus.Success

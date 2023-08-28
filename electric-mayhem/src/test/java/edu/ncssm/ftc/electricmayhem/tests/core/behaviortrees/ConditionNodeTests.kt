@@ -1,10 +1,10 @@
 package edu.ncssm.ftc.electricmayhem.tests.core.behaviortrees
 
-import edu.ncssm.ftc.electricmayhem.core.behaviortrees.ActionNode
+import edu.ncssm.ftc.electricmayhem.core.behaviortrees.actions.ActionNode
 import edu.ncssm.ftc.electricmayhem.core.behaviortrees.BehaviorTree
-import edu.ncssm.ftc.electricmayhem.core.behaviortrees.ConditionNode
-import edu.ncssm.ftc.electricmayhem.core.behaviortrees.FallbackNode
-import edu.ncssm.ftc.electricmayhem.core.behaviortrees.NodeStatus
+import edu.ncssm.ftc.electricmayhem.core.behaviortrees.conditions.ConditionNode
+import edu.ncssm.ftc.electricmayhem.core.behaviortrees.control.FallbackNode
+import edu.ncssm.ftc.electricmayhem.core.behaviortrees.general.NodeStatus
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.core.test.testCoroutineScheduler
 import io.kotest.matchers.shouldBe

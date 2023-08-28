@@ -1,4 +1,4 @@
-package edu.ncssm.ftc.electricmayhem.core.behaviortrees
+package edu.ncssm.ftc.electricmayhem.core.behaviortrees.general
 
 sealed class NodeStatus {
     object Success : NodeStatus()
