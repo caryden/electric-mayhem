@@ -68,6 +68,7 @@ The `NodeStatus` enum defines the possible statuses a node can have. The statuse
 - For an introduction to Finite State Machines in the context of FTC, refer to [Game Manual Zero](https://gm0.org/en/latest/docs/software/concepts/finite-state-machines.html).
 - To learn more about BehaviorTrees, check out this [YouTube playlist](https://youtube.com/playlist?list=PLFQdM4LOGDr_vYJuo8YTRcmv3FrwczdKg&si=z4Xpl5PENQ6W9Unb).
 - For an academic perspective on BehaviorTrees, read this [paper](https://arxiv.org/abs/1709.00084).
+- Here is [another good survey of Behavior Trees](https://upcommons.upc.edu/bitstream/handle/2117/128120/Behavior_Tree_Library_Guillem_Travila.pdf?sequence=1&isAllowed=y).
 - Here is a [really good overview of kotlin flows](https://youtu.be/emk9_tVVLcc).
 
 ## Contributing
