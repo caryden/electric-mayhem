@@ -7,7 +7,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class Cooldown(override val child: Node, private val coolDownMillis: Long) : DecoratorNode {
+class Cooldown(override val child: Node, private val coolDownMillis: Long)
+    : DecoratorNode() {
     private  val statusFlow = MutableStateFlow<NodeStatus>(NodeStatus.Idle)
     override val status = statusFlow.asStateFlow()
     private var lastTickTime = 0L

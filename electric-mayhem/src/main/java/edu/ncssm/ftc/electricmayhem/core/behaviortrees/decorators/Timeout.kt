@@ -8,7 +8,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.selects.select
 
-class Timeout(override val child: Node, val timeoutMillis: Long) : DecoratorNode {
+class Timeout(override val child: Node, val timeoutMillis: Long)
+    : DecoratorNode() {
     private  val statusFlow = MutableStateFlow<NodeStatus>(NodeStatus.Idle)
     override val status = statusFlow.asStateFlow()
     override suspend fun tick(tickContext: TickContext): NodeStatus {

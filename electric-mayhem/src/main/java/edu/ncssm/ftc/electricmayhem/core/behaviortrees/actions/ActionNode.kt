@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 class ActionNode(private val toExecute : suspend () -> NodeStatus)
-    : Node {
+    : Node() {
     constructor(subsystemCommand: SubsystemCommand) : this( {
         subsystemCommand.execute()
         NodeStatus.Success

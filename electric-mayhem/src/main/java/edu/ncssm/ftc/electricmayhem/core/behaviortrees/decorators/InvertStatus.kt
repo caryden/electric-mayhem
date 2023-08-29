@@ -13,7 +13,8 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
-class InvertStatus(override val child: Node) : DecoratorNode {
+class InvertStatus(override val child: Node)
+    : DecoratorNode() {
     private  val statusFlow = MutableStateFlow<NodeStatus>(NodeStatus.Idle)
     override val status = statusFlow.asStateFlow()
 

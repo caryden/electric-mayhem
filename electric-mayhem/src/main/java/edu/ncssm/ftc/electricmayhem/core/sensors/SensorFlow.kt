@@ -10,10 +10,11 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import java.io.Closeable
 
-open class SensorFlow<T>(private val getValue: () -> T, pollingMs : Long = 100L, dispatcher: CoroutineDispatcher = Dispatchers.IO)
+open class SensorFlow<T>(private val getValue: () -> T, pollingMs : Long = 100L, private val sensorScope: CoroutineScope)
     : StateFlow<SensorData<T>>, Sensor {
+    constructor(getValue: () -> T, pollingMs : Long = 100L, dispatcher: CoroutineDispatcher = Dispatchers.IO)
+            : this(getValue, pollingMs, CoroutineScope(dispatcher))
     private val stateflow = MutableStateFlow(SensorData<T>(getValue(), System.nanoTime()))
-    private val sensorScope  = CoroutineScope(dispatcher + SupervisorJob())
     init {
         sensorScope.launch {
             while (isActive) {

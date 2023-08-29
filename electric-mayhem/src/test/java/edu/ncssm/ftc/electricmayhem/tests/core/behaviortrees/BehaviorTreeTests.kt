@@ -17,7 +17,7 @@ import sensors.SensorFlow
 class BehaviorTreeTests : DescribeSpec({
     coroutineTestScope = true
     describe("A few behavior tree examples written as tests to offend the pedantic") {
-        context("Ben's Example from chaGPT") {
+        context("Ben's Example from chatGPT") {
             // https://chat.openai.com/share/90be9512-a51b-416d-aede-4af291895c9f
             it("should start and execute the tree and return success") {
                 val testDispatcher = StandardTestDispatcher(testCoroutineScheduler)
