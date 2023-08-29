@@ -53,10 +53,18 @@ class BehaviorTreeTests : DescribeSpec({
                         moveForwardAction.status.value shouldBe NodeStatus.Success
                         bt.root.status.value shouldBe NodeStatus.Success
 
-                        // Now this will demonstrate the reacitve nature of the tree
+                        // Now this will demonstrate the reactive nature of the tree
                         // changing this value will cause the sensor flow to emit a new value
                         // which will cause the condition node to change its status
-                        // which will cause the tree to reevaluate 're-tick()'
+                        // which will cause the tree to reevaluate to 're-tick()'
+                        // many BTs just have a tick() function that is called on a regular interval
+                        // this forces long running actions to be broken up into smaller chunks and even spin up
+                        // their own coroutines to do the work and return Running as a status.  This actually makes them
+                        // more complicated than they need to be.  Here, we just run the action and return Success or Failure.
+                        // Each tick is launched in its own coroutine.  This allows us to cancel the prior tick job if a condition changes.
+                        // Which is precisely what other loop/time-slice BTs do, but they have to seek out and cancel each running node.
+                        // Here, we just cancel the current tick job and create a new one.  This is much simpler.
+                        // Look in the BehaviorTree class for the code that does this.
                         sensorValue = true
                         testCoroutineScheduler.advanceTimeBy(1000L)
                         isObstacleNearbyCondition.status.value shouldBe NodeStatus.Success
