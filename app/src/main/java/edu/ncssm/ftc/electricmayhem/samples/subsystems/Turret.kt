@@ -3,8 +3,8 @@ package edu.ncssm.ftc.electricmayhem.samples.subsystems
 import edu.ncssm.ftc.electricmayhem.core.subsystems.SubsystemCommand
 import com.qualcomm.robotcore.hardware.DcMotorEx
 import com.qualcomm.robotcore.hardware.HardwareMap
-import edu.ncssm.ftc.electricmayhem.core.actuators.MotorFlow
 import edu.ncssm.ftc.electricmayhem.core.motion.MotionProfileGenerator
+import edu.ncssm.ftc.electricmayhem.core.subsystems.DcMotor
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -18,7 +18,7 @@ class Turret(private val motor : DcMotorEx) : Subsystem() {
     private val controlLoopTimeMs = 10L
     private val currentControlState = MutableStateFlow(TurretControlState(0.0, 0.0))
     private val targetControlState = MutableStateFlow(TurretControlState(0.0, 0.0))
-    private val desiredMotorPower = MotorFlow({ motor.power = it }, 0.0, 0.01)
+    private val turretMotor =DcMotor(motor, 0.0, 0.01)
     val current get() = currentControlState.asStateFlow()
     val target get() = targetControlState.asStateFlow()
     init {
@@ -36,7 +36,7 @@ class Turret(private val motor : DcMotorEx) : Subsystem() {
                     // do some PID stuff here
                     val kP = 0.1
                     val error = targetControlState.value.angle - currentControlState.value.angle
-                    desiredMotorPower.value = error * kP
+                    turretMotor.power = error * kP
                     delay(controlLoopTimeMs)
                 }
             } finally {

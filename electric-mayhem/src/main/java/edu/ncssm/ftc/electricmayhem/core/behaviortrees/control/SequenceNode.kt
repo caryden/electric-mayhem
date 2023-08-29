@@ -7,7 +7,7 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
  class SequenceNode(vararg children : Node)
-    : ControlNode {
+    : ControlNode() {
      private  val statusFlow = MutableStateFlow<NodeStatus>(NodeStatus.Idle)
      override val status = statusFlow.asStateFlow()
      override val children = children.toList()

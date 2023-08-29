@@ -6,7 +6,8 @@ import edu.ncssm.ftc.electricmayhem.core.behaviortrees.general.TickContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class Retry(override val child: Node, val upToTimes: Int) : DecoratorNode {
+class Retry(override val child: Node, val upToTimes: Int)
+    : DecoratorNode() {
     private  val statusFlow = MutableStateFlow<NodeStatus>(NodeStatus.Idle)
     override val status = statusFlow.asStateFlow()
 
