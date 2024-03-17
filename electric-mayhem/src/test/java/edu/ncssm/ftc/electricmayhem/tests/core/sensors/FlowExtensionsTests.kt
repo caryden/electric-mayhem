@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.toList
 
 @OptIn(ExperimentalKotest::class)
 class FlowExtensionsTests : DescribeSpec({
-    describe("Given a FLow<T> from a Sensor")
+    describe("Given a Flow<T> from a Sensor")
         context("When Intermediate flow extensions are used") {
             it("window should output a list of the specified size and data") {
                 val windowSize = 2
@@ -29,7 +29,7 @@ class FlowExtensionsTests : DescribeSpec({
                     list [1] shouldBe elements[i + 1]
                 }
             }
-            it("goesActive should emit on a false to true transistion only") {
+            it("goesActive should emit on a false to true transition only") {
                 val elements = listOf(false, false, true, true, false)
                 val outputList = MutableList<Boolean>(0) { false }
                 elements.asFlow()
@@ -38,7 +38,7 @@ class FlowExtensionsTests : DescribeSpec({
                     .toList(outputList)
                 outputList.size shouldBe 1
             }
-            it("goesInactive should emit on a true to false transistion only") {
+            it("goesInactive should emit on a true to false transition only") {
                 val elements = listOf(false, false, true, true, false)
                 val outputList = MutableList<Boolean>(0) { false }
                 elements.asFlow()
@@ -73,13 +73,13 @@ class FlowExtensionsTests : DescribeSpec({
             }
             it("not() should produce a flow that is the logical not of a boolean flow"){
                 val elements = listOf(false, true, true, true, false)
-                val expectedAnd = listOf(true,false,false,false,true)
+                val expectedNot = listOf(true,false,false,false,true)
                 val outputList = MutableList<Boolean>(0) { false }
                 elements.asFlow().not()
                     .toList(outputList)
-                outputList.size shouldBe expectedAnd.size
+                outputList.size shouldBe expectedNot.size
                 outputList.forEachIndexed() { i, v ->
-                    v shouldBe expectedAnd[i]
+                    v shouldBe expectedNot[i]
                 }
             }
 

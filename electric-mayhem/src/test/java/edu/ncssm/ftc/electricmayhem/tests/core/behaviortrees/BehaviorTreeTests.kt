@@ -13,6 +13,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.StandardTestDispatcher
 import edu.ncssm.ftc.electricmayhem.core.sensors.SensorFlow
+import io.kotest.core.config.configuration
 
 @OptIn(ExperimentalStdlibApi::class, ExperimentalCoroutinesApi::class)
 class BehaviorTreeTests : DescribeSpec({
@@ -26,7 +27,7 @@ class BehaviorTreeTests : DescribeSpec({
                 val isObstacleNearby = MutableStateFlow(false)
                 var sensorValue = false
 
-                // Here I am using a SensroFlow to simulate a sensor (for completeness really, you could any Flow<Boolean> here)
+                // Here I am using a SensorFlow to simulate a sensor (for completeness really, you could any Flow<Boolean> here)
                 // Because the sensorFlow has a coroutine that runs within its own scope, we have to close it when we are done
                 // Because it implements Closeable, we can use the use() function to do this for us.  When it leaves scope, its
                 // close() function will be called and the coroutine will be cancelled
