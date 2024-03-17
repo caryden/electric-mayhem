@@ -9,6 +9,7 @@ import io.mockk.mockkStatic
 class MyKotestProjectListener : ProjectListener {
     override suspend fun beforeProject() {
         mockkStatic(Log::class)
+        every { Log.isLoggable(any(),any()) } answers { true }
         every { Log.v(any(), any()) } answers { println("VERBOSE: ${args[0]} - ${args[1]}"); 0 }
         every { Log.d(any(), any()) } answers { println("DEBUG: ${args[0]} - ${args[1]}"); 0 }
         every { Log.i(any(), any()) } answers { println("INFO: ${args[0]} - ${args[1]}"); 0 }

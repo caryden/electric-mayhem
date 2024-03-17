@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Electric Mayhem Behavior Tree Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="viz-standalone.js"></script>
+</head>
+<body>
+  <header class="header">
+    <div class="logo">Electric Mayhem Dashboard</div>
+    <nav class="menu"></nav>
+    <div class="connection-status">Disconnected</div>
+  </header>
+  <main class="main-content">
+    <div id="graph"></div>
+  </main>
+
+  <script>
+    // Function to center the SVG graph
+    function centerGraph(svgElement) {
+    const bbox = svgElement.getBBox();
+    const viewBox = [bbox.x, bbox.y, bbox.width, bbox.height].join(' ');
+    svgElement.setAttribute('viewBox', viewBox);
+    }
+
+    // Function to handle zoom
+    function handleZoom(event) {
+    const svgElement = document.querySelector('#graph svg');
+    let viewBox = svgElement.getAttribute('viewBox').split(' ').map(Number);
+    const zoomFactor = 1.1;
+    
+    if (event.deltaY < 0) {
+        viewBox[2] /= zoomFactor;
+        viewBox[3] /= zoomFactor;
+    } else {
+        viewBox[2] *= zoomFactor;
+        viewBox[3] *= zoomFactor;
+    }
+    
+    svgElement.setAttribute('viewBox', viewBox.join(' '));
+    }
+
+    // Existing renderGraph function
+    function renderGraph() {
+    const graphString = `digraph {
+   graph [bgcolor=transparent];
+   node [fontname = "Arial", fontsize=10, style=filled];
+   edge [fillcolor=lightgrey, style=filled]
+
+  
+  a [shape=box, label="?", fillcolor=lightgreen, fontsize=20]
+  b [shape=box, label="→", fillcolor=lightgreen, fontsize=20]
+  c [shape=box, label="Action 4", fillcolor=lightgrey]
+  d [shape=box, label="action 5", fillcolor=lightgrey]
+  e [shape=oval, label="Condition 1", fillcolor=lightgreen]
+  f [shape=box, label="Action 2", fillcolor=lightgreen]
+  g [shape=box, label="Action 3", fillcolor=lightgreen]
+  
+  a -> b [fillcolor=black, id="edgeab-ticked"]
+  b -> a [fillcolor=lightgreen, id="edgeba-ticked"]
+  a -> c 
+  a -> d
+  b -> e [fillcolor=black]
+  e -> b [fillcolor=lightgreen]
+  b -> f [fillcolor=black]
+  f -> b [fillcolor=lightgreen]
+  b -> g [fillcolor=black]
+  g -> b [fillcolor=lightgreen]
+}`;
+    const graphContainer = document.getElementById('graph');
+    
+    Viz.instance().then(function(viz) {
+        const svgElement = viz.renderSVGElement(graphString);
+        graphContainer.appendChild(svgElement);
+        centerGraph(svgElement);
+        svgElement.addEventListener('wheel', handleZoom);
+    });
+    }
+
+    // Call the function to render the graph
+    renderGraph();    
+</script>
+
+  </script>
+</body>
+</html>

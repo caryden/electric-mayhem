@@ -1,17 +1,17 @@
 package edu.ncssm.ftc.electricmayhem.tests.core.sensors
 
+import edu.ncssm.ftc.electricmayhem.core.sensors.and
 import edu.ncssm.ftc.electricmayhem.core.sensors.data.SensorData
+import edu.ncssm.ftc.electricmayhem.core.sensors.goesActive
+import edu.ncssm.ftc.electricmayhem.core.sensors.not
+import edu.ncssm.ftc.electricmayhem.core.sensors.or
+import edu.ncssm.ftc.electricmayhem.core.sensors.window
 import io.kotest.common.ExperimentalKotest
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.toList
-import sensors.and
-import sensors.goesActive
-import sensors.not
-import sensors.or
-import sensors.window
 
 @OptIn(ExperimentalKotest::class)
 class FlowExtensionsTests : DescribeSpec({

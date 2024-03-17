@@ -51,9 +51,9 @@ class Turret(private val motor : DcMotorEx) : Subsystem() {
                 return@collect
         }
     }
-    // these inner classes are the subsystem actions (commands), they have access to private vars of the edu.ncssm.ftc.electricmayhem.samples.subsystems.Turret (outer) class
+    // these inner classes are the subsystem actions (commands), they have access to private vars of the Turret (outer) class
     // they are SubsystemAction<edu.ncssm.ftc.electricmayhem.samples.subsystems.Turret> types so that these are the only ones that can mutate this subsystem.  As such,
-    // these "require" this subsystem.  They primarily (almost exclusively) mute the targetControlState
+    // these "require" this subsystem.  They primarily (almost exclusively) mutate the targetControlState
     inner class MoveToAngle(private val desiredAngle: Double,) : SubsystemCommand(this, {
         val target = TurretControlState(desiredAngle, 0.0)
         val profileTimeStepMs = 2 * controlLoopTimeMs // this seems right that this is 2x the control loop time (Nyquist)

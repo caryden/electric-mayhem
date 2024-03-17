@@ -9,11 +9,12 @@ import edu.ncssm.ftc.electricmayhem.core.behaviortrees.general.NodeStatus
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.core.test.testCoroutineScheduler
 import io.kotest.matchers.shouldBe
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.StandardTestDispatcher
-import sensors.SensorFlow
+import edu.ncssm.ftc.electricmayhem.core.sensors.SensorFlow
 
-@OptIn(ExperimentalStdlibApi::class)
+@OptIn(ExperimentalStdlibApi::class, ExperimentalCoroutinesApi::class)
 class BehaviorTreeTests : DescribeSpec({
     coroutineTestScope = true
     describe("A few behavior tree examples written as tests to offend the pedantic") {
@@ -27,7 +28,7 @@ class BehaviorTreeTests : DescribeSpec({
 
                 // Here I am using a SensroFlow to simulate a sensor (for completeness really, you could any Flow<Boolean> here)
                 // Because the sensorFlow has a coroutine that runs within its own scope, we have to close it when we are done
-                // Becuase it implements Closeable, we can use the use() function to do this for us.  When it leaves scope, its
+                // Because it implements Closeable, we can use the use() function to do this for us.  When it leaves scope, its
                 // close() function will be called and the coroutine will be cancelled
                 SensorFlow( { sensorValue }, 100L, testDispatcher).use{ isObstacleNearbySensor ->
                     val isObstacleNearbyCondition = ConditionNode(isObstacleNearbySensor,false, testDispatcher)

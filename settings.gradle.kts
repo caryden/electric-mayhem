@@ -13,6 +13,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "ElectricMayhemExample"
+rootProject.name = "electric-mayhem-root"
 include(":app")
 include(":electric-mayhem")

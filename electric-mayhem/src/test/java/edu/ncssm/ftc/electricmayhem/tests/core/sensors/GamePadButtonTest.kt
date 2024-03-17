@@ -9,8 +9,8 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
 import edu.ncssm.ftc.electricmayhem.core.sensors.gamepad.GamePadButton
-import sensors.goesActive
-import sensors.goesInactive
+import edu.ncssm.ftc.electricmayhem.core.sensors.goesActive
+import edu.ncssm.ftc.electricmayhem.core.sensors.goesInactive
 
 
 @OptIn(ExperimentalStdlibApi::class, ExperimentalCoroutinesApi::class)

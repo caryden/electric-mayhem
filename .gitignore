@@ -48,3 +48,7 @@ local.properties
 /.idea/misc.xml
 /.idea/vcs.xml
 /.idea/workspace.xml
+.idea/copilot/chatSessions/00000000000.xd
+/.idea/copilot
+.idea/deploymentTargetDropDown.xml
+.idea/migrations.xml

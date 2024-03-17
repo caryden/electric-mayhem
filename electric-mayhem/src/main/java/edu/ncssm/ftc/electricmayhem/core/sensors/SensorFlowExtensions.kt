@@ -1,4 +1,4 @@
-package sensors
+package edu.ncssm.ftc.electricmayhem.core.sensors
 
 import edu.ncssm.ftc.electricmayhem.core.sensors.data.SensorData
 import kotlinx.coroutines.flow.*

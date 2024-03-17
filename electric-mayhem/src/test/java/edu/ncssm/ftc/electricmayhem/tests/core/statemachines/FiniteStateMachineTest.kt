@@ -2,6 +2,8 @@ package edu.ncssm.ftc.electricmayhem.tests.core.statemachines
 
 import actions.Action
 import edu.ncssm.ftc.electricmayhem.core.sensors.data.SensorData
+import edu.ncssm.ftc.electricmayhem.core.sensors.goesActive
+import edu.ncssm.ftc.electricmayhem.core.sensors.not
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.common.ExperimentalKotest
 import io.kotest.core.spec.style.DescribeSpec
@@ -14,8 +16,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
-import sensors.goesActive
-import sensors.not
 import edu.ncssm.ftc.electricmayhem.core.statemachines.FiniteStateMachine
 import edu.ncssm.ftc.electricmayhem.core.statemachines.FiniteStateMachineStates
 import edu.ncssm.ftc.electricmayhem.core.statemachines.fsm

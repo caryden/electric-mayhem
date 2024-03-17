@@ -7,10 +7,9 @@ import com.qualcomm.robotcore.hardware.HardwareMap
 import edu.ncssm.ftc.electricmayhem.core.general.RobotBase
 import edu.ncssm.ftc.electricmayhem.core.sensors.gamepad.GamePadFlow
 import edu.ncssm.ftc.electricmayhem.core.statemachines.FiniteStateMachine
-import edu.ncssm.ftc.electricmayhem.core.statemachines.StateMachine
 import edu.ncssm.ftc.electricmayhem.core.statemachines.fsm
-import sensors.SensorFlow
-import sensors.goesActive
+import edu.ncssm.ftc.electricmayhem.core.sensors.SensorFlow
+import edu.ncssm.ftc.electricmayhem.core.sensors.goesActive
 
 class RobotWithFSM(hardwareMap: HardwareMap, gamepad1: Gamepad, gamepad2 : Gamepad) : RobotBase() {
     private val turret = Turret(hardwareMap, "turretMotor")

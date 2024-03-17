@@ -1,0 +1,94 @@
+/* Define color variables */
+:root {
+    --rufous: #B01E08ff;
+    --ochre: #DC7D1Fff;
+    --paynes-gray: #556269ff;
+    --hollywood-cerise: #DB36A7ff;
+    --old-gold: #C7B82Fff;
+    --french-blue: #1D75C3ff;
+  }
+  
+  /* Reset some default browser styles */
+  body, h1, h2, h3, p, div {
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Set a solid background color */
+  body {
+    background-color: var(--paynes-gray);
+    color: #fff;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Style the header */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--french-blue);
+    padding: 1em;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .logo {
+    font-size: 1.5em;
+    color: var(--ochre);
+  }
+  
+  .menu {
+    color: var(--french-blue);
+  }
+  
+  .connection-status {
+    background-color: var(--old-gold);
+    padding: 0.5em;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: bold;
+  }
+  
+  /* Style the main content */
+  .main-content {
+    padding: 2em;
+  }
+  
+  /* Style the Graphviz output */
+  #graph {
+    width: 100%;
+    max-width: 1000px;
+    margin: auto;
+    border: 1px solid var(--ochre);
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  #graph svg {
+    width: 100%;
+    height: 100%;
+  }
+  
+  /* Define the pulsating animation */
+@keyframes pulsate {
+    0% {
+      stroke-width: 1;
+    }
+    50% {
+      stroke-width: 3;
+    }
+    100% {
+      stroke-width: 1;
+    }
+  }
+@keyframes dashOffset {
+    to {
+      stroke-dashoffset: -20;
+    }
+}
+/* Apply the animation to edges being ticked */
+[id$="-ticked"] > path {
+    stroke-width: 2;
+    stroke-dasharray: 2 2;
+    animation: dashOffset 1s linear infinite;
+}

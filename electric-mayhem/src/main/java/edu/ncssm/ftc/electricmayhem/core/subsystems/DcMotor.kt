@@ -3,7 +3,7 @@ package edu.ncssm.ftc.electricmayhem.core.subsystems
 import com.qualcomm.robotcore.hardware.DcMotorEx
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.*
-import sensors.SensorFlow
+import edu.ncssm.ftc.electricmayhem.core.sensors.SensorFlow
 import subsystems.Subsystem
 import kotlin.math.abs
 
