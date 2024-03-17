@@ -12,7 +12,7 @@ open class SensorFlow<T>(private val getValue: () -> T, pollingMs : Long = 100L,
     : StateFlow<SensorData<T>>, Sensor {
     constructor(getValue: () -> T, pollingMs : Long = 100L, dispatcher: CoroutineDispatcher = Dispatchers.IO)
             : this(getValue, pollingMs, CoroutineScope(dispatcher))
-    private val stateflow = MutableStateFlow(SensorData<T>(getValue(), System.nanoTime()))
+    private val stateflow = MutableStateFlow(SensorData(getValue(), System.nanoTime()))
     init {
         sensorScope.launch {
             while (isActive) {
