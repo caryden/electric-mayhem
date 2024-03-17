@@ -18,7 +18,7 @@ class Turret(private val motor : DcMotorEx) : Subsystem() {
     private val controlLoopTimeMs = 10L
     private val currentControlState = MutableStateFlow(TurretControlState(0.0, 0.0))
     private val targetControlState = MutableStateFlow(TurretControlState(0.0, 0.0))
-    private val turretMotor =DcMotor(motor, 0.0, 0.01)
+    private val turretMotor = DcMotor(motor, 0.0, 0.01)
     val current get() = currentControlState.asStateFlow()
     val target get() = targetControlState.asStateFlow()
     init {
@@ -33,14 +33,15 @@ class Turret(private val motor : DcMotorEx) : Subsystem() {
         subsystemScope.launch {
             try {
                 while (isActive) {
-                    // do some PID stuff here
+                    // do some PID/control loop stuff here
                     val kP = 0.1
                     val error = targetControlState.value.angle - currentControlState.value.angle
                     turretMotor.power = error * kP
                     delay(controlLoopTimeMs)
                 }
             } finally {
-                // This block will run even if the coroutine is cancelled.  Put any cleanup code here
+                // This block will run even if the coroutine is cancelled.  Put any cleanup code here.
+                turretMotor.close()
             }
         }
     }

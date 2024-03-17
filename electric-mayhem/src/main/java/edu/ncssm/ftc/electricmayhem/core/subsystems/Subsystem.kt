@@ -13,7 +13,7 @@ abstract class Subsystem(dispatcher: CoroutineDispatcher = Dispatchers.Default) 
     protected val subsystemScope = CoroutineScope(dispatcher + SupervisorJob())
     private var currentSubsystemJob = AtomicReference<Job?>(null)
 
-    suspend fun executeSubsystemAction(action: suspend () -> Unit) {
+    suspend fun     executeSubsystemAction(action: suspend () -> Unit) {
         // cancel any existing job running for this subsystem if not already finished
         // and join to ensure it is completed
         val job = currentSubsystemJob.get()

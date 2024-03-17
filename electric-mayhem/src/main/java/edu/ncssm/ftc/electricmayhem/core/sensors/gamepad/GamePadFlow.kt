@@ -30,7 +30,7 @@ class GamePadFlow(private val gamepad : Gamepad) {
     val leftJoystick = Joystick({ JoystickData(gamepad.right_stick_x, gamepad.right_stick_y) })
 
     val rightJoystickButton = GamePadButton( { gamepad.right_stick_button })
-
+    val leftJoystickButton = GamePadButton( { gamepad.left_stick_button })
 
 }
 
