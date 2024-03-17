@@ -55,7 +55,7 @@ dependencies {
     compileOnly("org.firstinspires.ftc:FtcCommon:9.1.0")
     compileOnly("org.firstinspires.ftc:Vision:9.1.0")
     implementation("org.nanohttpd:nanohttpd-websocket:2.3.1") {
-        exclude(module = "nanohttpd")
+        exclude(group="fi.iki.elonen", module="nanohttpd")
     }
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
 
