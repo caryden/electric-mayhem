@@ -12,7 +12,6 @@ class ActionNode(private val toExecute : suspend () -> NodeStatus)
     : Node() {
     constructor(subsystemCommand: SubsystemCommand) : this( {
         subsystemCommand.execute()
-        NodeStatus.Success
     })
 
     private  val statusFlow = MutableStateFlow<NodeStatus>(NodeStatus.Idle)

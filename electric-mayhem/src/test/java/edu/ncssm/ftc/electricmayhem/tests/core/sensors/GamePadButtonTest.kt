@@ -9,6 +9,8 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
 import edu.ncssm.ftc.electricmayhem.core.sensors.gamepad.GamePadButton
+import edu.ncssm.ftc.electricmayhem.core.sensors.gamepad.isPressed
+import edu.ncssm.ftc.electricmayhem.core.sensors.gamepad.isReleased
 import edu.ncssm.ftc.electricmayhem.core.sensors.goesActive
 import edu.ncssm.ftc.electricmayhem.core.sensors.goesInactive
 
@@ -26,7 +28,7 @@ class GamePadButtonTest : DescribeSpec({
                 val testDispatcher = StandardTestDispatcher(testCoroutineScheduler)
                 val gamePadButton = GamePadButton({ simulatedButtonState }, testDispatcher )
                 val collectorJob = launch {
-                    gamePadButton.goesActive().collectLatest {
+                    gamePadButton.isPressed().collectLatest {
                         timesPressed++
                     }
                 }
@@ -49,7 +51,7 @@ class GamePadButtonTest : DescribeSpec({
                 val gamePadButton = GamePadButton({ simulatedButtonState }, testDispatcher)
                 val collectorJob = launch {
                     gamePadButton
-                        .goesInactive()
+                        .isReleased()
                         .collectLatest {
                         timesReleased++
                     }

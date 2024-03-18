@@ -1,7 +1,9 @@
 package actions
 
 import android.util.Log
+import edu.ncssm.ftc.electricmayhem.core.behaviortrees.general.NodeStatus
 import edu.ncssm.ftc.electricmayhem.core.general.Actionable
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.withTimeout
 
@@ -12,21 +14,27 @@ open class Action(private val toExecute : suspend () -> Unit) : Actionable {
     internal var timeoutMs : Long = noTimeoutEnabled
     internal var onTimeout : suspend () -> Unit = { Log.d(tag,"No onTimeout specified.") }
     override fun toString() = this::class.simpleName ?: super.toString()
-     override suspend fun execute() {
-         var timedOut = false
+     override suspend fun execute(): NodeStatus {
          try {
-             if(timeoutMs > noTimeoutEnabled)
-                 withTimeout(timeoutMs){ toExecute() }
-             else
+             return if(timeoutMs > noTimeoutEnabled)
+                 withTimeout(timeoutMs) {
+                     toExecute()
+                     NodeStatus.Success
+                 }
+             else {
                  toExecute()
+                 NodeStatus.Success
+             }
 
          } catch (ex : TimeoutCancellationException) {
-             timedOut = true
-             Log.d(tag,"Timed out with timeout of $timeoutMs")
-         }
-
-         if(timedOut)
              onTimeout()
+             Log.d(tag,"Timed out with timeout of $timeoutMs")
+             return NodeStatus.Success
+         } catch (ex : CancellationException) {
+             return NodeStatus.Cancelled
+         } catch (ex : Exception) {
+             return NodeStatus.Failure
+         }
      }
     object NoAction : Action( { } )
 }

@@ -1,5 +1,6 @@
 package subsystems
 
+import edu.ncssm.ftc.electricmayhem.core.behaviortrees.general.NodeStatus
 import edu.ncssm.ftc.electricmayhem.core.sensors.Sensor
 import edu.ncssm.ftc.electricmayhem.core.statemachines.StateMachine
 import kotlinx.coroutines.*
@@ -13,17 +14,26 @@ abstract class Subsystem(dispatcher: CoroutineDispatcher = Dispatchers.Default) 
     protected val subsystemScope = CoroutineScope(dispatcher + SupervisorJob())
     private var currentSubsystemJob = AtomicReference<Job?>(null)
 
-    suspend fun     executeSubsystemAction(action: suspend () -> Unit) {
+    suspend fun executeSubsystemAction(action: suspend () -> NodeStatus): NodeStatus {
         // cancel any existing job running for this subsystem if not already finished
         // and join to ensure it is completed
         val job = currentSubsystemJob.get()
         if (null != job && !job.isCompleted)
             job.cancelAndJoin()
 
-        val newJob = subsystemScope.launch {
-            action()
+        val newJob = subsystemScope.async {
+            try {
+                action()
+            } catch (e: CancellationException) {
+                NodeStatus.Cancelled
+            } catch (e: Exception) {
+                NodeStatus.Failure
+            }
         }
         currentSubsystemJob.set(newJob)
+
+        // Wait for the action to complete and return its result
+        return newJob.await()
     }
     open fun start() {
         for (s in subsystems)

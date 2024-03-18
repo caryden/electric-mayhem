@@ -2,11 +2,19 @@ package edu.ncssm.ftc.electricmayhem.core.motion
 
 import edu.ncssm.ftc.electricmayhem.core.motion.data.MotionProfileStep
 import edu.ncssm.ftc.electricmayhem.core.motion.data.MotionState
+import edu.ncssm.ftc.electricmayhem.core.util.epsilonEquals
 import kotlin.math.abs
 import kotlin.math.sign
 
 class MotionProfileGenerator(val maxVelocity: Double, val maxAcceleration: Double, val maxJerk: Double, val timeStepMs : Long) {
-
+    init {
+        if (maxVelocity <= 0.0) throw IllegalArgumentException("Max velocity must be positive")
+        if (maxAcceleration <= 0.0) throw IllegalArgumentException("Max acceleration must be positive")
+        if (maxJerk <= 0.0) throw IllegalArgumentException("Max jerk must be positive")
+        if (timeStepMs <= 0) throw IllegalArgumentException("Time step must be positive")
+        if (maxJerk epsilonEquals 0.0) throw IllegalArgumentException("Max jerk must be non-zero")
+        if (maxAcceleration epsilonEquals 0.0) throw IllegalArgumentException("Max acceleration must be non-zero")
+    }
     fun generateSCurveMotionProfile(currentState: MotionState, targetState: MotionState, tolerance : Double = 1e-6): List<MotionProfileStep> {
         val motionProfileSteps = mutableListOf<MotionProfileStep>()
         val timeStep = timeStepMs / 1000.0
@@ -66,3 +74,5 @@ class MotionProfileGenerator(val maxVelocity: Double, val maxAcceleration: Doubl
         return motionProfileSteps
     }
 }
+
+

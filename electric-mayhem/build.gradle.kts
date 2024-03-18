@@ -76,7 +76,7 @@ afterEvaluate {
 
                 groupId = "edu.ncssm"
                 artifactId = "electric-mayhem"
-                version = "0.8.2"
+                version = "0.8.5"
             }
         }
     }
