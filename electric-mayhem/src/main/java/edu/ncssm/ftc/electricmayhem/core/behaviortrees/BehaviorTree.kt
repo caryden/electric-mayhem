@@ -66,7 +66,7 @@ class BehaviorTree(dispatcher: CoroutineDispatcher = Dispatchers.Default, val ro
 
         // This is the part of the code that makes it really reactive.  We scan the tree for condtion nodes.
         // The we collect the status of each node. Becuase the status is a flow, when it changes, it will emit
-        // its new value for us ot collect.  Then, we emit a ConditionChangedEvent to the tickTrigger flow.
+        // its new meters for us ot collect.  Then, we emit a ConditionChangedEvent to the tickTrigger flow.
         // This will cause the tree to tick again.
         conditions.forEach {condition ->
             treeScope.launch {

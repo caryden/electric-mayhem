@@ -443,7 +443,7 @@ class VL53L0X(deviceClient: I2cDeviceSynch?, deviceClientIsOwned: Boolean) :
         return SpadInfo(spadsToEnableCount, spadType, goodSpadMap)
     }
     /*
-        Sets the SPADs according to the value saved to NVM by ST during production. Assuming
+        Sets the SPADs according to the meters saved to NVM by ST during production. Assuming
         similar conditions (e.g. no cover glass), this should give reasonable readings and we
         can avoid running ref spad management (tedious code).
     */

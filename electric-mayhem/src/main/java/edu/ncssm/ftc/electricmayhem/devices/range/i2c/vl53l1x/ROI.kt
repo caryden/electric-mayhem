@@ -42,7 +42,7 @@ data class ROI(val X : Int, val Y : Int, val spadWidth: Int, val spadHeight: Int
             intArrayOf(120, 112, 104, 96, 88, 80, 72, 64, 56, 48, 40, 32, 24, 16, 8, 0)
         )
         fun createFromRegisterValues(spadWidth : Int, spadHeight : Int, spadCenterValue : Int) : ROI {
-            // find the spad center value in the matrix, then lowerLeftX and lowerLeftY are the coordinates of the upper left corner of the ROI
+            // find the spad center meters in the matrix, then lowerLeftX and lowerLeftY are the coordinates of the upper left corner of the ROI
             // remember that the spad array is 16x16 and
             var found = false
             val spadCenter = Point(0,0)
@@ -56,7 +56,7 @@ data class ROI(val X : Int, val Y : Int, val spadWidth: Int, val spadHeight: Int
                     }
                 }
             }
-            if (!found) throw IllegalArgumentException("Could not find spad center value in the matrix")
+            if (!found) throw IllegalArgumentException("Could not find spad center meters in the matrix")
 
             val X = if(spadWidth % 2 == 0) spadCenter.x - spadWidth / 2 else spadCenter.x - (spadWidth + 1) / 2
             val Y = if(spadHeight % 2 == 0) spadCenter.y - spadHeight / 2 else spadCenter.y - (spadHeight - 1) / 2
@@ -77,8 +77,8 @@ data class ROI(val X : Int, val Y : Int, val spadWidth: Int, val spadHeight: Int
          * @return A Point representing the center of the ROI.
          */
         private fun getSPADROICenter( X : Int,  Y : Int, spadWidth: Int, spadHeight: Int) : Point {
-            // if the ROI is an even number of pixels wide, the center is the rightmost (higher x value) pixel of the center two
-            // if the ROI is an even number of pixels tall, the center is the topmost (lower y value) pixel of the center two
+            // if the ROI is an even number of pixels wide, the center is the rightmost (higher x meters) pixel of the center two
+            // if the ROI is an even number of pixels tall, the center is the topmost (lower y meters) pixel of the center two
             // if the ROI is an odd number of pixels wide, the center is the center pixel
             // if the ROI is an odd number of pixels tall, the center is the center pixel
             val x = if(spadWidth % 2 == 0) X + spadWidth / 2 else X + (spadWidth + 1) / 2
@@ -86,10 +86,10 @@ data class ROI(val X : Int, val Y : Int, val spadWidth: Int, val spadHeight: Int
             return Point(x, y)
         }
         /**
-         * Retrieves the value from the SPAD center matrix at the given ROI center point.
+         * Retrieves the meters from the SPAD center matrix at the given ROI center point.
          *
          * @param spadROICenter A Point representing the center of the ROI.
-         * @return The value from the SPAD center matrix at the given point.
+         * @return The meters from the SPAD center matrix at the given point.
          */
         private fun getSPADROICenterValue(spadROICenter : Point) : Int {
             return VL53L1X_SPAD_CENTER_MATRIX[spadROICenter.y][spadROICenter.x]

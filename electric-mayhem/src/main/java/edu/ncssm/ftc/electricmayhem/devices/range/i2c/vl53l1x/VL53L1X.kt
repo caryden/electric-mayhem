@@ -143,7 +143,7 @@ class VL53L1X(deviceClient: I2cDeviceSynch?, deviceClientIsOwned: Boolean) :
             0x01.toByte(), // 0x61 : not user-modifiable
             0xf1.toByte(), // 0x62 : not user-modifiable
             0x0d.toByte(), // 0x63 : not user-modifiable
-            0x01.toByte(), // 0x64 : Sigma threshold MSB (mm in 14.2 format for MSB+LSB), use SetSigmaThreshold(), default value 90 mm
+            0x01.toByte(), // 0x64 : Sigma threshold MSB (mm in 14.2 format for MSB+LSB), use SetSigmaThreshold(), default meters 90 mm
             0x68.toByte(), // 0x65 : Sigma threshold LSB
             0x00.toByte(), // 0x66 : Min count Rate MSB (MCPS in 9.7 format for MSB+LSB), use SetSignalThreshold()
             0x80.toByte(), // 0x67 : Min count Rate LSB
@@ -275,7 +275,7 @@ class VL53L1X(deviceClient: I2cDeviceSynch?, deviceClientIsOwned: Boolean) :
     /**
      * Returns the manufacturer of the sensor.
      *
-     * @return A `HardwareDevice.Manufacturer` value representing the sensor's manufacturer.
+     * @return A `HardwareDevice.Manufacturer` meters representing the sensor's manufacturer.
      */
     override fun getManufacturer(): HardwareDevice.Manufacturer {
         return HardwareDevice.Manufacturer.Other
@@ -469,7 +469,7 @@ class VL53L1X(deviceClient: I2cDeviceSynch?, deviceClientIsOwned: Boolean) :
         return when (dmRawValue) {
             0x14.toByte() -> DistanceMode.SHORT // DM = 1 in API documentation
             0x0A.toByte() -> DistanceMode.LONG  // DM = 2 in API documentation
-            else -> throw IllegalStateException("Unknown distance mode value read from sensor $dmRawValue")
+            else -> throw IllegalStateException("Unknown distance mode meters read from sensor $dmRawValue")
         }
     }
     private fun setDistanceMode(distanceMode: DistanceMode) {
@@ -506,7 +506,7 @@ class VL53L1X(deviceClient: I2cDeviceSynch?, deviceClientIsOwned: Boolean) :
             0x02E1, 0x01CC -> 100
             0x03E1, 0x02D9 -> 200
             0x0591, 0x048F -> 500
-            else -> throw IllegalStateException("Unknown timing budget value read from sensor $rawTimingBudget")
+            else -> throw IllegalStateException("Unknown timing budget meters read from sensor $rawTimingBudget")
         }
         return timingBudgetInMs.toShort()
     }
